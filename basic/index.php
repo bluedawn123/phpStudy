@@ -24,19 +24,21 @@
     ''(작은따옴표)는 안된다!
   </pre>
 
-  <?php
-  $hello = "안녕하세요";
-  $name = '홍길동';
-  // echo $name;
-
-  // echo '안녕하세요! '.$name. '님';  => 안녕하세요! 홍길동님
-  // echo "안녕! $name";  => 안녕! 홍길동
-  // echo '안녕! $name';  => 안녕! $name
-
-  echo $hello. $name. "님";  //안녕하세요홍길동님
-
-
-  ?>
+<p>
+    <?php
+    $hello = "안녕하세요";
+    $name = '홍길동';
+    // echo $name;
+  
+    // echo '안녕하세요! '.$name. '님';  => 안녕하세요! 홍길동님
+    // echo "안녕! $name";  => 안녕! 홍길동
+    // echo '안녕! $name';  => 안녕! $name
+  
+    echo  $name. "$hello.님";  //홍길동안녕하세요.님
+  
+  
+    ?>
+</p>
 
 
 
