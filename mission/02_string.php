@@ -34,7 +34,7 @@
   <p>'   Hello World!'문자열에서 앞의 공백 제거</p>
   <?php
     $text = 'Hello world!';
-    $newtxt = trim($text);
+    $newtxt = ltrim($text);
     echo $newtxt;
   ?>
   <hr>
@@ -43,7 +43,7 @@
   <h3>1-4</h3>
   <p>'   Hello World!     '문자열에서 앞, 뒤의 공백 제거</p>
   <?php
-    $text = '    hello world!    ';
+    $text = '    Hello world!    ';
     $newtxt = trim($text);
     echo $newtxt;
   ?>

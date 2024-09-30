@@ -1,7 +1,7 @@
 <?php
-  setcookie('city', 'seoul', time()+60);
-  print_r($_COOKIE); //Array ( [city] => seoul )
-  print_r($_COOKIE['city']); // seoul
+  setcookie('city', 'seoul', time()-60);
+  //print_r($_COOKIE); Array ( [city] => seoul )
+  //print_r($_COOKIE['city']); seoul
 
 ?>
 
@@ -13,7 +13,7 @@
   <title>cookie</title>
 </head>
 <body>
-  <h1>내가 만든 쿠키</h1>
+  <h1>쿠키 삭제</h1>
   <pre>
     쿠키의 값은 seoul 입니다. 
     쿠키가 없습니다. 

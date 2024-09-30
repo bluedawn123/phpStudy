@@ -4,7 +4,7 @@
 ?>
   <main>
     <section>
-      <h2>About page</h2>
+      <h2><?= $title; ?></h2>
     </section>
   </main>
   <?php
