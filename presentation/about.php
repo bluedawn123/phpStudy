@@ -1,6 +1,5 @@
 <?php
-  $title = 'About Us';
-  
-  require('functions.php'); //불러오기
+  $title = 'About us';
+  require('functions.php');
   view('about', $title);
-?>
+?>  

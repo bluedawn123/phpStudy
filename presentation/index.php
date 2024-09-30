@@ -1,6 +1,5 @@
 <?php
   $title = 'hello, world';
-  
-  require('functions.php'); //불러오기
+  require('functions.php');
   view('index', $title);
-?>
+?>  

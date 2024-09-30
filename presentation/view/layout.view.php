@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php $model ; ?></title>
+  <title><?= $model; ?></title>
 </head>
 <body>
-  <?php 
+  <?php
     require("$name.view.php");
   ?>
+
 </body>
 </html>
