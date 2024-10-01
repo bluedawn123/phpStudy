@@ -37,6 +37,11 @@
 </head>
 <body>
   <h1>심플 게시판</h1>
+  <form action="search.php">
+    <input type="text" name="keyword">
+    <button>검색</button>
+  </form>
+  <hr>
   <ul>
     <?= $list; ?>
   </ul>

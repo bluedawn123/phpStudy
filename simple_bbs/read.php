@@ -2,14 +2,14 @@
   require_once('config.php');
 
   $num = $_GET['no']; //num으로 no변수를 받음
-  print_r($num);
+  // print_r($num);
 
   $sql = "SELECT * FROM msg_board WHERE no = $num ";
   $result = mysqli_query($mysqli, $sql);
 
   //데이터 확인. 4가지 방법중 하나!
   $data = mysqli_fetch_row($result);
-  print_r($data);
+  // print_r($data);
 
   
 ?>
@@ -30,6 +30,10 @@
     <!-- 글 상세 출력 -->
     <?= $data[2]?>
   </div>
+  <hr>
+  <!--update.php에 수정하고싶은 데이터 정보가 넘어가야 한다.-->
+  <a href="update.php?no=<?= $data[0]; ?>">글수정</a>  
+  <a href="delete.php?no=<?= $data[0]; ?>">글삭제</a>
   <hr>
   <a href="index.php">글목록</a>
 </body>
