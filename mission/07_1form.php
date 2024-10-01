@@ -14,12 +14,19 @@
   <h3>1-1</h3>
   <form action="07_2form_ok.php" method="get">
     이름: <input type="text" name="username">
-    <button>send</button>
+          <button>send</button>
   </form>
+
   <h2>1-2</h2>
   <form action="07_3form_ok.php" method="post">
     이름: <input type="text" name="username">
-    <button>send</button>
+          <button>send</button>
+  </form>
+
+  <h2>1-3</h2>
+  <form action="07_4form_ok.php?subscribe=gold" method="post">
+    이름: <input type="text" name="username">
+          <button>send</button>
   </form>
 </body>
 </html>

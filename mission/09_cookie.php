@@ -12,14 +12,16 @@
     쿠키이름 username의 값이 '홍길동'이고, 30일간 유지되는 쿠키를 생성한다
   </p>
   <?php  
-    ????("username", "홍길동", time() + (???? * 30), "/");
+    setcookie("username", "홍길동", time() + (86400 * 30), "/");
   ?>
   <h3>1-2</h3>
   <p>
     username이라는 쿠키이름에 값이 있다면 출력한다.
   </p>
   <?php  
-
+    if(isset($_COOKIE['username'])){
+      echo $_COOKIE['username'];
+    }
 
   ?>
 </body>
