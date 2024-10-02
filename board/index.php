@@ -30,19 +30,24 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/board/inc/header.php');
         $title = str_replace($title, iconv_substr($row['title'], 0, 10).'...', $title);
       }
 
-      $list .=
-        "
+      $list .= "
     <tr>
       <th scope=\"row\">{$row['idx']}</th>
-      <td><a href=\"page/read.php?idx={$row['idx']}\">{$title}</a></td>
+      <td>". 
+        (
+          $row['lock_post'] == 1 ? 
+        "<a href=\"page/lock_read.php?idx={$row['idx']}\">{$title}<i class=\"fa-solid fa-lock\"></i>" 
+        : 
+        "<a href=\"page/read.php?idx={$row['idx']}\">{$title}"
+        ) 
+        ."</a>
+      </td>
       <td>{$row['name']}</td>
       <td>{$row['date']}</td>
       <td>{$row['hit']}</td>
       <td>{$row['likes']}</td>
     </tr>
-    
     ";
-
     }
 
     ?>

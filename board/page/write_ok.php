@@ -9,7 +9,17 @@
   $title = $_POST['title'];
   $content = $_POST['content'];
 
-  $sql = "INSERT INTO board (name, pw, title, content) VALUES('$username', '$userpw', '$title', '$content')";
+
+  //lockpost관련
+  if(isset($_POST['lockpost'])){
+    $lock_post = 1;
+  }else{
+    $lock_post = 0;
+  }
+
+  $sql = "INSERT INTO 
+  board (name, pw, title, content, lock_post) 
+  VALUES('$username', '$userpw', '$title', '$content', '$lock_post')";
 
   // $result = $mysqli->query($sql);
 

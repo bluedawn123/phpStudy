@@ -1,5 +1,7 @@
 <?php
 $mysqli = new mysqli("localhost", "greenart", "123123", "greenart");
+// $mysqli = new mysqli("localhost", "haemilyjh", "dlf2tkatk!", "haemilyjh");
+
 
 // Check for errors
 if($mysqli->connect_error){
