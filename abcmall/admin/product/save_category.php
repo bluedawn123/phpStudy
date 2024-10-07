@@ -11,7 +11,7 @@ $sql = "SELECT cid FROM category WHERE step = $step and (name = '$name' or code 
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-if($data->cid){ //중복되는게 있는경우,
+if($data && isset($data->cid)){ //데이터가 있고, 거기서 중복되는게 있는경우,
   $return_data = array('result'=>-1);  //★이건 연관배열. 이 연관배열을 json형식으로 변환해야함
   echo json_encode($return_data);
   exit;
