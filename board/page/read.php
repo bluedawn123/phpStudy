@@ -61,6 +61,8 @@ $mysqli->query($hitsql);
       <div class="modal fade" id="reply_edit<?=$row['idx']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <form action="reply_modify_ok.php" class="modal-content" method="POST">
+            <input type="hidden" name="r_no" value="<?= $row['idx'] ?>">
+            <input type="hidden" name="b_no" value="<?= $num ?>">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">댓글 수정</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

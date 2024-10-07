@@ -23,22 +23,34 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/board/inc/header.php');
     //Array ( [idx] => 1 [name] => 홍길동 [pw] => 1234 [title] => 안녕하세요 [content] => 반갑습니다 [date] => 2024-10-01 [hit] => [likes] => )
     $list = '';
     while ($row = $result->fetch_assoc()) {
+      $b_idx = $row['idx'];
+      $rc_sql = "SELECT COUNT(*) AS cnt FROM reply WHERE b_idx = $b_idx"; //댓글갯수
+      $rc_result = $mysqli->query($rc_sql);
+      $rc_data = $rc_result->fetch_assoc();
+
+      //댓글 
+      if($rc_data['cnt'] > 0){
+        $rc = '('.$rc_data['cnt'].')';
+      } else{
+        $rc = '';
+      }
+
       $title = $row['title'];
 
       //글자수 10개 넘을때 ...으로 만들기
       if (iconv_strlen($title) > 10) {
         $title = str_replace($title, iconv_substr($row['title'], 0, 10).'...', $title);
       }
-
+      
       $list .= "
     <tr>
       <th scope=\"row\">{$row['idx']}</th>
       <td>". 
         (
           $row['lock_post'] == 1 ? 
-        "<a href=\"page/lock_read.php?idx={$row['idx']}\">{$title}<i class=\"fa-solid fa-lock\"></i>" 
+        "<a href=\"page/lock_read.php?idx={$row['idx']}\">{$title}{$rc}<i class=\"fa-solid fa-lock\"></i>" 
         : 
-        "<a href=\"page/read.php?idx={$row['idx']}\">{$title}"
+        "<a href=\"page/read.php?idx={$row['idx']}\">{$title}{$rc}"
         ) 
         ."</a>
       </td>
