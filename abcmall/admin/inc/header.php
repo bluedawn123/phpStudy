@@ -5,6 +5,7 @@ include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/dbcon.php');
 if(!isset($title)){
   $title = '';
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -12,27 +13,21 @@ if(!isset($title)){
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?= $title; ?>ABCmall</title>
+  <title><?= $title; ?> ABCmall</title>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-  <?php
-  if(isset($summernote_css)){
-    echo $summernote_css;
-  }
-  
+  <?php 
+    if(isset($summernote_css)){
+      echo $summernote_css;
+    }
   ?>
-  
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-
-  <?php
-  if(isset($summernote_js)){
-    echo $summernote_js;
-  }
-  
+  <?php 
+    if(isset($summernote_js)){
+      echo $summernote_js;
+    }
   ?>
-
 </head>
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
