@@ -1,20 +1,19 @@
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'].'/ABCMALL/admin/inc/header.php');
+include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/header.php');
 
-//넘겨서 온 데이터
 $cate = $_POST['cate'];
 $step = $_POST['step'];
 $category = $_POST['category'];
 
-$sql = "SELECT * FROM category WHERE step = $step and pcode = '$cate' ";
+$sql = "SELECT * FROM category WHERE step = $step and pcode = '$cate'";
 $result = $mysqli->query($sql);
 
 $html = "<option selected>{$category}</option>";
 
-while($data = $result->fetch_object() ){  
-  $html .= "<option value=\"{$data->code}\">{$data->name}</option>";  ;
+while($data = $result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+  $html .= "<option value=\"{$data->code}\">{$data->name}</option>";
 }
 
-echo $html;  //화면에 되돌려주는 방법은 이것하나!
+echo $html;
 
 ?>
