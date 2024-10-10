@@ -1,13 +1,14 @@
 <?php
 $title = "상품목록";
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/header.php');
+
 if(!isset($_SESSION['AUID'])){
   echo "
     <script>
-      alert('관리자로 로그인 해 주세요.');
-      location.href='../login.php';
+      alert('관리자로 로그인해주세요');
+      location.href = '../login.php';
     </script>
-  " ;
+  ";
 }
 
 ?>

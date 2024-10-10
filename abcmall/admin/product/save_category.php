@@ -32,5 +32,7 @@ if($result){
   $return_data = array('result'=>0);//실패
   echo json_encode($return_data); 
 }
+
 $mysqli->close();
+
 ?>

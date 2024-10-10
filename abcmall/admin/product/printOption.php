@@ -5,7 +5,7 @@ $cate = $_POST['cate'];
 $step = $_POST['step'];
 $category = $_POST['category'];
 
-$sql = "SELECT * FROM category WHERE step = $step and pcode = '$cate' ";
+$sql = "SELECT * FROM category WHERE step = $step and pcode = '$cate'";
 $result = $mysqli->query($sql);
 
 $html = "<option selected value=\"\">{$category}</option>";
