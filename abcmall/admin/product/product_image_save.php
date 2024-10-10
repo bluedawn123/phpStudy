@@ -40,5 +40,5 @@ if(move_uploaded_file($added_file['tmp_name'], $save_dir.$savefile)){
   echo json_encode($return_data); //연관배열 -> 객체
   exit;
 }
-
+$mysqli->close();
 ?>
