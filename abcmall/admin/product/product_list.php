@@ -12,14 +12,12 @@ if(!isset($_SESSION['AUID'])){
 }
 
 //모든 상품 조회
-$sql = "SELECT * FROM products ";
+$sql = "SELECT * FROM products";
 $result = $mysqli->query($sql) or die('query error :'.$mysqli->error);
 while($data = $result->fetch_object()){ 
   $dataArr[]= $data; 
-
-  
 }
-print_r($dataArr);
+
 ?>
 
 <div class="container">
@@ -27,7 +25,7 @@ print_r($dataArr);
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">No. </th>
+        <th scope="col">No.111</th>
         <th scope="col">썸네일</th>
         <th scope="col">제품명</th>
         <th scope="col">가격</th>
