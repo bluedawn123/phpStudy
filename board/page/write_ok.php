@@ -1,46 +1,55 @@
 <?php
- include_once($_SERVER['DOCUMENT_ROOT'].'/board/inc/db.php');
+  include_once($_SERVER['DOCUMENT_ROOT'].'/board/inc/db.php');
 
- //print_r($_POST); Array ( [name] => [title] => [content] => )
-  
-//write.php에서 name="~~~" 으로 던진 name pw title content 를 받음. 이걸 써줘야함.
   $username = $_POST['name'];
   $userpw = password_hash($_POST['pw'], PASSWORD_DEFAULT);
+
   $title = $_POST['title'];
   $content = $_POST['content'];
 
-
-  //lockpost관련
   if(isset($_POST['lockpost'])){
     $lock_post = 1;
   }else{
     $lock_post = 0;
   }
+  
+  //print_r($_FILES['attach']);
+
+  $max_file_size = 10*1024*1024;
+
+  if($_FILES['attach']['size']>$max_file_size ){
+    echo "<script>
+      alert('10MB 이상을 첨부할 수 없습니다.');
+      history.back();
+    </script>";
+    exit;
+  }
+
+  
+  //파일업로드
+  $file_name = $_FILES['attach']['name'];
+  $temp_path = $_FILES['attach']['tmp_name'];
+  $upload_path = '../upload/'.$file_name;
+  move_uploaded_file($temp_path, $upload_path);
+  
+ strpos($_FILES['attach']['type'],'image') !== false ? $is_img = 1 : $is_img= 0;
 
   $sql = "INSERT INTO 
-  board (name, pw, title, content, lock_post) 
-  VALUES('$username', '$userpw', '$title', '$content', '$lock_post')";
+  board (name, pw, title, content,file, lock_post,is_img) 
+  VALUES ('$username','$userpw','$title','$content','$upload_path', $lock_post, $is_img)";
 
   // $result = $mysqli->query($sql);
 
- /*
- 글 작성이 완료되면 '글쓰기 완료' 경고창을 띄우고 리스트 페이지로 이동
- */
-
- if($mysqli->query($sql) === true){
-  echo "
-  <script>
-    alert('글쓰기 완료');
-    location.href = '../index.php';
-  </script>
-  ";
-}else{
-  echo 
-  "<script>
-    alert('글쓰기 실패');
-    location.href = '../index.php';
-  </script>
-  ";
-}
+  if($mysqli->query($sql) === true){
+    echo "<script>
+      alert('글작성 완료');
+      location.href = '../index.php';
+    </script>";
+  }else{
+    echo "<script>
+      alert('글작성 실패');
+      location.href = '../index.php';
+    </script>";
+  }
 
 ?>

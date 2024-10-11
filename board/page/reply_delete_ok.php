@@ -11,21 +11,15 @@
 
   $reply_pw = $reply['password']; //원래 비번 hash 암호화
   $input_pw = $_POST['pw']; //입력한 비번
-  $input_content = $_POST['content']; //수정한 내용
-
-  //password_verify(입력한비번,원래비번)  일치 여부 true, false 반환
 
   if(password_verify($input_pw,$reply_pw)){
-    /*
-      replay 테이블에서 idx의 값이 $r_no와 일치하는 행에서 content컬럼의 값을 $input_content로 업데이트
-    */
-    $update_sql = "UPDATE reply SET content='$input_content' WHERE idx=$r_no";
-    $update_result = $mysqli->query($update_sql);
+    $delete_sql = "DELETE FROM reply where idx=$r_no";
+    $delete_result = $mysqli->query($delete_sql);
 
-    if($update_result){
+    if($delete_result){
       echo "
       <script>
-        alert('댓글이 수정되었습니다.');
+        alert('댓글이 삭제되었습니다.');
         location.replace('read.php?idx={$b_no}');
       </script>
     ";

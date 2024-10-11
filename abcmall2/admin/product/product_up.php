@@ -6,6 +6,7 @@ $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/di
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/category_func.php');
 
+
 if(!isset($_SESSION['AUID'])){
   echo "
     <script>
@@ -15,13 +16,19 @@ if(!isset($_SESSION['AUID'])){
   ";
 }
 
+//대분류 조회
+// $sql = "SELECT * FROM category WHERE step = 1";
+// $result = $mysqli->query($sql) or die('query error :'.$mysqli->error);
+// while($data = $result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
+//   $cate1[]= $data; //$cate1배열에 $data할당
+// }
 
 $mysqli->close();
 
 ?>
 
 <div class="container">
-  <h1>상품등록</h1>
+  <h1>상품등록!</h1>
   <form action="product_ok.php" id="product_save" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="product_image" id="product_image_id" value="">
     <input type="hidden" name="contents" id="contents" value="">
@@ -135,7 +142,7 @@ $mysqli->close();
     <button class="btn btn-primary">상품등록</button>
   </form>
 </div>
-<script src="http://<?= $_SERVER['HTTP_HOST']?>/abcmall/admin/js/category_option.js"></script>
+<script src="http://<?= $_SERVER['HTTP_HOST']?>/abcmall/admin/category_option.js"></script>
 <script>
 
 
@@ -240,7 +247,45 @@ $mysqli->close();
 
   }
 
+  // $('#cate1').change(function(){    
+  //   makeOption($(this), 2, '중분류', $('#cate2'));
+  // });
 
+  // $('#cate2').change(function(){    
+  //   makeOption($(this), 3, '소분류', $('#cate3'));
+  // });
+
+  // $('#pcode3').change(function(){    
+  //   makeOption($(this), 2, '중분류', $('#pcode4'));
+  // });
+
+  // async function makeOption(e,step,category,target){
+  //   let cate = e.val();
+
+  //   let data = new URLSearchParams({
+  //     cate:cate,
+  //     step:step,
+  //     category:category
+  //   });
+
+  //   try{
+  //     const response = await fetch('printOption.php',{
+  //       method:'post',
+  //       headers: { //전송되는 데이터의 타입
+  //         'Content-Type': 'application/x-www-form-urlencoded' 
+  //       },
+  //       body:data
+  //     });
+  //     if(!response.ok){ //연결에러가 있다면
+  //       throw new Error('연결에러');
+  //     }
+  //     const result = await response.text(); //응답의 결과를
+  //     target.html(result);
+
+  //   } catch(error){
+  //     console.log(error);
+  //   }
+  // }
 
 
   $( "#datepicker" ).datepicker({

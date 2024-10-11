@@ -1,10 +1,8 @@
 </div>
 
-
 </body>
 </html>
-
 <?php
-  $mysqli->close();
-
+// Close connection
+$mysqli->close();
 ?>

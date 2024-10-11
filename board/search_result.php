@@ -1,8 +1,13 @@
 <?php
   include_once($_SERVER['DOCUMENT_ROOT'].'/board/inc/header.php');
   // echo $_SERVER['DOCUMENT_ROOT'];
+
+  $category = $_GET['search_cat'];
+  $keywords = $_GET['keywords'];
+  echo $category;
+  echo $keywords;
 ?>
-    <h1>게시판</h1>
+    <h1>게시판 - 검색결과</h1>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -17,7 +22,7 @@
       <tbody>
         <?php
         //게시글 개수 조회
-        $page_sql = "SELECT COUNT(*) AS cnt FROM board";
+        $page_sql = "SELECT COUNT(*) AS cnt FROM board WHERE $category LIKE '%$keywords%'";
         $page_result = $mysqli->query($page_sql);
         $page_data = $page_result->fetch_assoc();
         $row_num = $page_data['cnt'];
@@ -43,7 +48,7 @@
 
         if($block_end > $total_page ) $block_end = $total_page;
   
-        $sql = "SELECT * FROM board ORDER BY idx DESC LIMIT $start_num, $list" ;        
+        $sql = "SELECT * FROM board WHERE $category LIKE '%$keywords%' ORDER BY idx DESC LIMIT $start_num, $list" ;        
         $result = $mysqli->query($sql);
         
          //print_r($result->fetch_assoc());
@@ -116,7 +121,11 @@
             // if($page == $i) {$active = 'active';} else {$active = '';}
             $page == $i ? $active = 'active': $active = '';
         ?>
-        <li class="page-item <?= $active; ?>"><a class="page-link" href="index.php?page=<?= $i;?>"><?= $i;?></a></li>
+        <li class="page-item <?= $active; ?>">
+          <a class="page-link" 
+            href="search_result.php?search_cat=<?= $category;?>&keywords=<?= $keywords;?>&page=<?= $i;?>"
+          ><?= $i;?></a>
+        </li>
         <?php
           }
           $next = $block_end + 1;
