@@ -10,6 +10,15 @@ if(!isset($_SESSION['AUID'])){
   " ;
 }
 
+//모든 상품 조회
+$sql = "SELECT * FROM products ";
+$result = $mysqli->query($sql) or die('query error :'.$mysqli->error);
+while($data = $result->fetch_object()){ 
+  $dataArr[]= $data; 
+
+  
+}
+print_r($dataArr);
 ?>
 
 <div class="container">
@@ -17,29 +26,30 @@ if(!isset($_SESSION['AUID'])){
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">No. </th>
+        <th scope="col">썸네일</th>
+        <th scope="col">제품명</th>
+        <th scope="col">가격</th>
+        <th scope="col">메인</th>
+        <th scope="col">신제품</th>
+        <th scope="col">베스트</th>
+        <th scope="col">추천</th>
+        <th scope="col">상태</th>
+        <th scope="col">보기</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     </tbody>
   </table>
