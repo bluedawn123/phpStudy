@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/dbcon.php');
 
 if(!isset($title)){
@@ -23,7 +21,9 @@ if(!isset($title)){
       echo $summernote_css;
     }
   ?>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script> -->
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
   <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
   <?php 
     if(isset($summernote_js)){

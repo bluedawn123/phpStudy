@@ -6,7 +6,7 @@
   <title>01 Syntax</title>
 </head>
 <body>
-  <h2>문법1</h2>
+  <h2>문법21</h2>
   <h3>1-1</h3>
   <?php
     echo "hello world";

@@ -9,10 +9,10 @@ if(!isset($_SESSION['AUID'])){
   echo "
     <script>
       alert('관리자로 로그인해주세요');
-      location.href='../login.php';
+      location.href = '../login.php';
     </script>
   ";
-};
+}
 
 //대분류 조회
 $sql = "SELECT * FROM category WHERE step = 1";
@@ -20,14 +20,16 @@ $result = $mysqli->query($sql) or die('query error :'.$mysqli->error);
 while($data = $result->fetch_object()){ //조회된 값들 마다 할일, 값이 있으면 $data할당
   $cate1[]= $data; //$cate1배열에 $data할당
 }
+
 $mysqli->close();
+
 ?>
 
 <div class="container">
-  <h1>상품등록</h1>
+  <h1>상품등록!</h1>
   <form action="product_ok.php" id="product_save" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="product_image" id="product_image_id" value="">
-    <input type="hidden" name="contents" id="contents" value="" required>
+    <input type="hidden" name="contents" id="contents" value="">
     <table class="table">
       <tbody>
         <tr>
@@ -35,8 +37,8 @@ $mysqli->close();
           <td>
             <div class="row">
               <div class="col-md-4">
-                <select class="form-select" name= "cate1" id="cate1" aria-label="대분류 선택" required>
-                  <option selected >대분류 선택</option>
+                <select class="form-select" id="cate1" name="cate1" aria-label="대분류 선택" required>
+                  <option selected>대분류 선택</option>
                   <?php
                     foreach($cate1 as $c1){
                   ?>
@@ -47,12 +49,12 @@ $mysqli->close();
                 </select>
               </div>
               <div class="col-md-4">
-                <select class="form-select" name= "cate2" id="cate2" aria-label="Default select example">
+                <select class="form-select" id="cate2" name="cate2" aria-label="Default select example">
                   <option selected value="">대분류를 먼저 선택하세요</option>
                 </select>
               </div>
               <div class="col-md-4">
-                <select class="form-select" name= "cate3" id="cate3" aria-label="Default select example">
+                <select class="form-select" id="cate3" name="cate3" aria-label="Default select example">
                   <option selected value="">중분류를 먼저 선택하세요</option>
                 </select>
               </div>
@@ -137,10 +139,10 @@ $mysqli->close();
     </table>
     <button class="btn btn-primary">상품등록</button>
   </form>
-
 </div>
-
 <script>
+
+
   $('#addImage').click(function(){
     $('#upfile').trigger('click');
   });
@@ -160,7 +162,6 @@ $mysqli->close();
     let formData = new FormData(); //페이지전환 없이, 폼전송없이(submit 이벤트 없이) 파일 전송, 빈폼을 생성
     formData.append('savefile',file); //<input type="file" name="savefile" value="file"> 이미지 첨부
 
-
     $.ajax({
       url:'product_image_save.php',
       data:formData,
@@ -170,7 +171,7 @@ $mysqli->close();
       dataType:'json', //product_image_save.php이 반환하는 값의 타입
       type:'POST', //파일 정보를 전달하는 방법
       success:function(returned_data){ //product_image_save.php과 연결(성공)되면 할일
-        // console.log(returned_data);
+        console.log(returned_data);
 
         if(returned_data.result === 'size'){
           alert('10MB 이하만 첨부할 수 있습니다.');
@@ -182,7 +183,7 @@ $mysqli->close();
           alert('첨부실패, 관리자에게 문의하세요');
           return;
         } else{ //파일 첨부가 성공하면
-          let imgids = $('#product_image_id').val() + returned_data.imgid+',';
+          let imgids = $('#product_image_id').val() + returned_data.imgid + ',';
           $('#product_image_id').val(imgids);
           let html = `
             <div class="card" style="width: 9rem;" id="${returned_data.imgid}">
@@ -196,55 +197,52 @@ $mysqli->close();
         }
       }
 
-      
-    });
+    })
   } //Attachfile
-  //$('#addedImages button').click(function) -> 요약문. 버튼이 없는 시점에서는 사용 불가(추후 추가한 이미지가 비동기 방식이라 찾지 못함)
-  //변수.addEventListener('이벤트종류', '대상', funchtion(){})
+  //$('#addedImages button');
+  //변수.addEventListener('이벤트종류','대상',function(){})
 
-  $('#addedImages').on('click', 'button', function(){ // -> 클릭 후 'button'을 찾으라고 해서 가능함. 
+  $('#addedImages').on('click','button', function(){
     let imgid = $(this).closest('.card').attr('id');
+    //console.log(imgid);
     file_delete(imgid);
-     console.log(imgid);
   });
 
+
   function file_delete(imgid){
-    // if(confirm('정말 삭제할까요?' === false)){
-      console.log('Deleting image ID:', imgid);
-    if(!confirm('정말 삭제할까요?')){ //조건이 false일 때
-      return false; //거짓 반환, 종료
+
+    if(!confirm('정말 삭제할까요?')){      //조건이 false일때
+      return false;//거짓 반환,종료      
     }
 
     let data = {
       imgid:imgid
     }
     $.ajax({
-      async:false, //동기방식, image_delete.php의 결과를 받으면 진행
+      async:false, //동기방식, image_delete.php의 결과를 받으면 진행      
       url:'image_delete.php',
-      data : data, //삭제할 번호 data 객체를 전달
-      type: 'post', //data를 전달할 방식
-      dataType : 'json', //json형식 이용해서, 객체로 받겠다.
-      error : function(){
+      data:data, //삭제할 번호 data 객체를 전달
+      type:'post', //data를 전달할 방식
+      dataType:'json', //json형식이용해서, 객체로 받겠다.
+      error:function(){
         //연결실패시 할일
-        console.log('error')
       },
       success:function(returned_data){
-        console.log(returned_data)
-        //연결성공시 할일, image_delete.php가 echo로 출력해준 값을 매개변수 returened_data로 받는다.
+        //연결성공시 할일, image_delete.php가 echo 출력해준 값을 매배견수 returend_data 받자
         if(returned_data.result == 'mine'){
-          alert('본인이 작성한 제품의 이미지만 삭제할 수 있습니다.')
+          alert('본인이 작성한 제품의 이미지만 삭제할 수 있습니다.');
           return;
         } else if(returned_data.result == 'error'){
-          alert('삭제 실패!')
+          alert('삭제 실패!');
           return;
         } else {
           $('#'+imgid).remove(); //요소(tag)를 삭제
         }
       }
-    })
-  }
 
-  
+    })
+
+  }
 
   $('#cate1').change(function(){    
     makeOption($(this), 2, '중분류', $('#cate2'));
@@ -304,16 +302,12 @@ $mysqli->close();
       ['height', ['height']]
     ]
   });
-  
-  $('#product_save').on('submit', save);
 
-  function save(){
+  $('#product_save').submit(function(e){
     var markup = target.summernote('code');
     let content = encodeURIComponent(markup);
-    $('#contents').val(content);
-  };
-
-
+    $('#contents').val(markup);
+  });
 
 </script>
 <?php
