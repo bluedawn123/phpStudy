@@ -41,12 +41,21 @@ while ($row = $result->fetch_object()) {
 $category_display = implode(' / ', $category_names);  
 //echo $category_display;   결과: 컴퓨터 / 노트북 / 게임용
 
+//추가이미지 조회
+//product_image_table에서 pid와 일치하는 행을 모두 조회하고 그 결과를 변수명 $addImages에 배열할당
+$addimg_sql = "SELECT filename FROM product_image_table WHERE pid = $pid";
+$addimg_result = $mysqli->query($addimg_sql);
+$addImages = [];
+while($addimg_data = $addimg_result->fetch_object() ){ //조회된 값들 마다 할 일, 값이 있으면 $data에 할당
+  $addImages[] = $addimg_data;
+}
 
+//print_r($addImages); Array ( [0] => stdClass Object ( [filename] => 20241014043843340572.jpg ) )
 
 ?>
 
 <div class="contaier">
-  <h1>상품수정</h1>
+  <h1>상품상세</h1>
   <table class="table">
     <thead>
       <tr>
@@ -56,27 +65,57 @@ $category_display = implode(' / ', $category_names);
     </thead>
     <tbody>
       <tr>
-        <th scope="col">제품명</th>
+        <th scope="row">제품명</th>
         <td><?= $data->name ?></td>
       </tr>
       <tr>
-        <th scope="col">썸네일</th>
+        <th scope="row">썸네일</th>
         <td><img src="<?= $data->thumbnail; ?>"  style="width: 9rem;"></td>
       </tr>
       <tr>
-        <th scope="col">카테고리</th>
+        <th scope="row">추가이미지</th>
+        <td>
+          <ul class="d-flex gap-3 list-unstyled">
+            <!-- $addImages의 값을 foreach반목문의 li태그로 출력 
+            <li>
+            <a href="이미지경로">
+              <img src="이미지 경로" alt="" class="w-10">
+            </a>
+          </li>
+          -->
+          <?php
+            if(isset($addImages)){  
+              foreach($addImages as $item){
+          ?>
+
+            <li class="w-25">
+              <a href="/abcmall/admin/upload/<?= $item->filename; ?>">
+                <img src="/abcmall/admin/upload/<?= $item->filename; ?>" alt="..." class="w-100">
+              </a>
+            </li>
+
+          <?php 
+              }
+            }
+          ?>
+
+          </ul> 
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">카테고리</th>
         <td><?= $category_display ?></td>
       </tr>
       <tr>
-        <th scope="col">상세설명</th>
+        <th scope="row">상세설명</th>
         <td><?= $data->content ?></td>
       </tr>
       <tr>
-        <th scope="col">가격</th>
+        <th scope="row">가격</th>
         <td><?= $data->price ?></td>
       </tr>
       <tr>
-        <th scope="col">세일가격</th>
+        <th scope="row">세일가격</th>
         <td><?= $data->sale_price; ?></td>
       </tr>
       <tr>
@@ -108,7 +147,7 @@ $category_display = implode(' / ', $category_names);
   <hr>
   <ul class="d-flex gap-3 justify-content-end list-unstyled">
     <li><button class="btn btn-primary btn-sm" id="goback">상품목록</button></li>
-    <li><a href="" class="btn btn-secondary btn-sm">상품수정</a></li>
+    <li><a href="product_edit.php?pid=<?= $pid; ?>" class="btn btn-secondary btn-sm">상품수정</a></li>
     <li><a href="" class="btn btn-danger btn-sm">상품삭제</a></li>
   </ul>
 </div>

@@ -163,59 +163,69 @@
     총 상품 수: <span class="badge text-bg-secondary"><?= $row_num ?> </span>
   <hr>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">No.</th>
-        <th scope="col">썸네일</th>
-        <th scope="col">제품명</th>
-        <th scope="col">가격</th>
-        <th scope="col">메인</th>
-        <th scope="col">신제품</th>
-        <th scope="col">베스트</th>
-        <th scope="col">추천</th>
-        <th scope="col">상태</th>
-        <th scope="col">보기</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- $dataArr의 값으로 foreach로 tr 출력 (안전하게는 값이 있으면 출력, 만약에 값이 없으면 에러날수도) -->
-      <?php
-        if(isset($dataArr)){  
-          foreach($dataArr as $d_item){
-      ?>
-          <tr>
-            <th scope="row"><?= $d_item->pid; ?></th>
-            <td><img src="<?= $d_item->thumbnail; ?>" style="width: 9rem;" alt="..."></td>
-            <td><?= $d_item->name; ?></td>
-            <td><?= $d_item->price; ?></td>
-            <td>
-              <input type="checkbox" class="form-check-input" <?php echo $d_item->ismain ? 'checked' : '' ?> name="ismain[<?= $d_item->pid; ?>]" id="ismain[<?= $d_item->pid; ?>]">
-            </td>
-            <td>
-              <input type="checkbox" class="form-check-input" <?php echo $d_item->isnew ? 'checked' : '' ?> name="isnew[<?= $d_item->pid; ?>]" id="isnew[<?= $d_item->pid; ?>]">
-            </td>
-            <td>
-              <input type="checkbox" class="form-check-input" <?php echo $d_item->isbest ? 'checked' : '' ?> name="isbest[<?= $d_item->pid; ?>]" id="isbest[<?= $d_item->pid; ?>]">
-            </td>
-            <td>
-              <input type="checkbox" class="form-check-input" <?php echo $d_item->isrecom ? 'checked' : '' ?> name="isrecom[<?= $d_item->pid; ?>]" id="isrecom[<?= $d_item->pid; ?>]">
-            </td>
-            <td>
-              <select class="form-select" aria-label="판매여부" name="status[<?= $d_item->pid; ?>]" id="status[<?= $d_item->pid; ?>]">
-                <option value="-1" <?php if($d_item->status == -1){echo 'selected';} ?>>판매중지</option>
-                <option value="0" <?php if($d_item->status == 0){echo 'selected';} ?>>대기</option>
-                <option value="1" <?php if($d_item->status == 1){echo 'selected';} ?>>판매중</option>
-              </select>
-            </td>
-            <td><a href="product_view.php?pid=<?= $d_item->pid; ?>" class="btn btn-primary btn-sm">상세보기</a></td>
-          </tr>
-      <?php 
+  <form action="plist_update.php" method="GET">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">썸네일</th>
+          <th scope="col">제품명</th>
+          <th scope="col">가격</th>
+          <th scope="col">메인</th>
+          <th scope="col">신제품</th>
+          <th scope="col">베스트</th>
+          <th scope="col">추천</th>
+          <th scope="col">상태</th>
+          <th scope="col">보기</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- $dataArr의 값으로 foreach로 tr 출력 (안전하게는 값이 있으면 출력, 만약에 값이 없으면 에러날수도) -->
+        <?php
+          if(isset($dataArr)){  
+            foreach($dataArr as $d_item){
+        ?>
+            <tr>
+              <th scope="row">
+                <input type="hidden" name="pid[]" value="<?= $d_item->pid; ?>">   <!--name에 배열로 넘겼을때 어떻게 변할까?-->
+                <?= $d_item->pid; ?>
+              </th>
+              <td><img src="<?= $d_item->thumbnail; ?>" style="width: 9rem;" alt="..."></td>
+              <td><?= $d_item->name; ?></td>
+              <td><?= $d_item->price; ?></td>
+              <td>
+                <input type="checkbox" class="form-check-input" <?php echo $d_item->ismain ? 'checked' : '' ?> name="ismain[<?= $d_item->pid; ?>]" id="ismain[<?= $d_item->pid; ?>]"
+                value="<?php echo $d_item->ismain ?>">
+              </td>
+              <td>
+                <input type="checkbox" class="form-check-input" <?php echo $d_item->isnew ? 'checked' : '' ?> name="isnew[<?= $d_item->pid; ?>]" id="isnew[<?= $d_item->pid; ?>]"
+                value="<?php echo $d_item->isnew?>">
+              </td>
+              <td>
+                <input type="checkbox" class="form-check-input" <?php echo $d_item->isbest ? 'checked' : '' ?> name="isbest[<?= $d_item->pid; ?>]" id="isbest[<?= $d_item->pid; ?>]"
+                value="<?php echo $d_item->isbest ?>">
+              </td>
+              <td>
+                <input type="checkbox" class="form-check-input" <?php echo $d_item->isrecom ? 'checked' : '' ?> name="isrecom[<?= $d_item->pid; ?>]" id="isrecom[<?= $d_item->pid; ?>]"
+                value="<?php echo $d_item->isrecom ?>">
+              </td>
+              <td>
+                <select class="form-select" aria-label="판매여부" name="status[<?= $d_item->pid; ?>]" id="status[<?= $d_item->pid; ?>]">
+                  <option value="-1" <?php if($d_item->status == -1){echo 'selected';} ?>>판매중지</option>
+                  <option value="0" <?php if($d_item->status == 0){echo 'selected';} ?>>대기</option>
+                  <option value="1" <?php if($d_item->status == 1){echo 'selected';} ?>>판매중</option>
+                </select>
+              </td>
+              <td><a href="product_view.php?pid=<?= $d_item->pid; ?>" class="btn btn-primary btn-sm">상세보기</a></td>
+            </tr>
+        <?php 
+            }
           }
-        }
-      ?>
-    </tbody>
-  </table>
+        ?>
+      </tbody>
+    </table>
+    <button class="btn btn-secondary btn-sm ms-auto d-block">일괄수정</button>
+  </form>
 
   <!-- 페이지네이션 -->
   <nav aria-label="Page navigation">
@@ -249,8 +259,9 @@
     </nav>
 
   <hr>
-  <a href="product_up.php" class="btn btn-primary">상품등록</a>
-
+  <div class="d-flex justify-content-end">
+    <a href="product_up.php" class="btn btn-primary">상품등록</a>
+  </div>
 </div>
 
 <script src="http://<?= $_SERVER['HTTP_HOST'] ?>/abcmall/admin/js/category_option.js"></script>
@@ -258,7 +269,19 @@
    $( "#datepicker" ).datepicker({
     dateFormat: "yy-mm-dd"
   });
+
+  $('table .form-check-input').change(function(){
+    if($(this).prop("checked")){
+      $(this).val('1');
+    }else{
+      $(this).val('0');
+      
+    }
+  });
+
 </script>
+
+
 
 <?php
   include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/footer.php');
