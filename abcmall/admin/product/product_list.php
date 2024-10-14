@@ -87,7 +87,7 @@
     //총게시물 수 78개일때 end 번호 8 일 수 있게
 
     //products 테이블에서 모든 데이터를 조회, 등록일 기준으로 역순으로 출력
-    $sql = "SELECT * FROM products WHERE 1=1 $search_where ORDER BY reg_date DESC LIMIT $start_num, $list"; 
+    $sql = "SELECT * FROM products WHERE 1=1 $search_where ORDER BY pid DESC LIMIT $start_num, $list"; 
     //페이저끝
     //echo $sql; //목록 출력안됐을 때 확인
 

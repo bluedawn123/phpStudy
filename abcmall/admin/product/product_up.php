@@ -62,19 +62,19 @@ $mysqli->close();
         </tr>
         <tr>
           <th scope="row">배송비</th>
-          <td><input type="text" class="form-control w-25" name="delivery_fee"></td>       
+          <td><input type="text" class="form-control w-25" name="delivery_fee" required value="0" ></td>       
         </tr>
         <tr>
           <th scope="row">제품가격</th>
-          <td><input type="text" class="form-control w-25" name="price" required></td>       
+          <td><input type="text" class="form-control w-25" name="price" required value="0"></td>       
         </tr>
         <tr>
           <th scope="row">세일가격</th>
-          <td><input type="text" class="form-control w-25" name="sale_price"></td>       
+          <td><input type="text" class="form-control w-25" name="sale_price" required value="0"></td>       
         </tr>
         <tr>
           <th scope="row">세일비율</th>
-          <td><input type="text" class="form-control w-25" name="sale_ratio"></td>       
+          <td><input type="text" class="form-control w-25" name="sale_ratio" required value="0"></td>       
         </tr>
         <tr>
           <th scope="row">전시옵션</th>

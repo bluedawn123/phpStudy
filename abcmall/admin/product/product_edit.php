@@ -49,6 +49,7 @@ $mysqli->close();
   <h1><?= $title; ?></h1>
   <form action="product_edit_ok.php" id="product_save" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="product_image" id="product_image_id" value="">
+    <input type="hidden" name="pid" value="<?= $pid; ?>">
     <input type="hidden" name="contents" id="contents" value="">
     <table class="table">
       <tbody>
@@ -125,7 +126,6 @@ $mysqli->close();
           <th scope="row">위치지정</th>
           <td>          
             <select class="form-select w-25" name="locate" aria-label="상품 노출 위치 지정">
-              <option selected>위치지정</option>
               <option value="0" <?php if($data->locate == 0){echo 'selected';}?>>지정안함</option>
               <option value="1" <?php if($data->locate == 1){echo 'selected';}?>>1번 위치</option>
               <option value="2" <?php if($data->locate == 2){echo 'selected';}?>>2번 위치</option>  
@@ -136,7 +136,6 @@ $mysqli->close();
           <th scope="row">판매여부</th>
           <td>          
             <select class="form-select w-25" name="status" aria-label="판매여부">
-              <option selected>판매여부</option>
               <option value="-1" <?php if($data->locate == -1){echo 'selected';}?>>판매중지</option>
               <option value="0" <?php if($data->locate == 0){echo 'selected';}?>>대기중</option>
               <option value="1" <?php if($data->locate == 1){echo 'selected';}?>>판매중</option>  
@@ -159,7 +158,7 @@ $mysqli->close();
           <th scope="row">썸네일</th>
           <td>
             <img src="<?= $data->thumbnail; ?>" alt="" class="w-25">
-            <input type="file" accept="image/*" class="form-control w-50" name="thumbnail" required>
+            <input type="file" accept="image/*" class="form-control w-50" name="thumbnail" >
           </td>       
         </tr>          
         <tr>
