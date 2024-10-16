@@ -40,9 +40,25 @@ while($addimg_data = $addimg_result->fetch_object()){
   $addImages[] = $addimg_data;
 }
 
+// 옵션 조회 함수
+function getOptions($mysqli, $pid, $cate) {
+  $otp_sql = "SELECT * FROM product_options WHERE pid = $pid and cate = '$cate'";
+  $otp_result = $mysqli->query($otp_sql);
+
+  $options = [];
+  while ($otp_data = $otp_result->fetch_object()) {
+      $options[] = $otp_data;
+  }
+  return $options;
+}
+
+// 옵션1 조회 (컬러)
+$options1 = getOptions($mysqli, $pid, '컬러');
+
+// 옵션2 조회 (사이즈)
+$options2 = getOptions($mysqli, $pid, '사이즈');
 
 $mysqli->close();
-
 ?>
 
 <div class="container">
@@ -125,7 +141,7 @@ $mysqli->close();
         <tr>
           <th scope="row">위치지정</th>
           <td>          
-            <select class="form-select w-25" name="locate" aria-label="상품 노출 위치 지정">
+            <select class="form-select w-25" name="locate" aria-label="상품 노출 위치 지정">             
               <option value="0" <?php if($data->locate == 0){echo 'selected';}?>>지정안함</option>
               <option value="1" <?php if($data->locate == 1){echo 'selected';}?>>1번 위치</option>
               <option value="2" <?php if($data->locate == 2){echo 'selected';}?>>2번 위치</option>  
@@ -136,6 +152,7 @@ $mysqli->close();
           <th scope="row">판매여부</th>
           <td>          
             <select class="form-select w-25" name="status" aria-label="판매여부">
+              <option selected>판매여부</option>
               <option value="-1" <?php if($data->locate == -1){echo 'selected';}?>>판매중지</option>
               <option value="0" <?php if($data->locate == 0){echo 'selected';}?>>대기중</option>
               <option value="1" <?php if($data->locate == 1){echo 'selected';}?>>판매중</option>  
@@ -157,8 +174,8 @@ $mysqli->close();
         <tr>
           <th scope="row">썸네일</th>
           <td>
-            <img src="<?= $data->thumbnail; ?>" alt="" class="w-25">
-            <input type="file" accept="image/*" class="form-control w-50" name="thumbnail" >
+            <img src="<?= $data->thumbnail; ?>" alt="" class="w-25" id="thumbnail_preview">
+            <input type="file" accept="image/*" class="form-control w-50" name="thumbnail" id="thumbnail">
           </td>       
         </tr>          
         <tr>
@@ -183,8 +200,109 @@ $mysqli->close();
               ?>   
             </div>
           </td>       
-        </tr>          
-        
+        </tr> 
+        <?php 
+          if(isset($options1)){
+        ?> 
+        <tr>
+          <th scope="row">
+            <select class="form-select" name="option_cate1" aria-label="옵션명 선택">              
+              <option value="">옵션</option>
+              <option value="컬러" selected>컬러</option>
+              <option value="사이즈">사이즈</option>
+            </select>
+          </th>
+          <td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">옵션명</th>
+                  <th scope="col">가격</th>
+                  <th scope="col">이미지</th>
+                </tr>
+              </thead>
+              <tbody id="option1">
+                <?php               
+                  foreach($options1 as $op){              
+                ?> 
+                <tr id="optionTr1">
+                  <td>
+                    <input type="text" class="form-control" name="optionName1[]" value="<?= $op->option_name;?>">
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" value="<?= $op->option_price ;?>" placeholder="0" aria-label="옵션 가격" aria-describedby="basic-addon2" name="optionPrice1[]">
+                      <span class="input-group-text" id="basic-addon2">원</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">                     
+                      <input type="file" class="form-control" id="optionImage1"  name="optionImage1[]">
+                    </div>
+                  </td>
+                </tr>
+                <?php               
+                  }            
+                ?> 
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm optAddBtn" type="button">옵션추가</button>
+          </td>       
+        </tr>  <!-- //컬러 옵션 추가 -->
+        <?php 
+         }
+        ?> 
+        <?php 
+          if(isset($options2)){
+        ?>         
+        <tr>
+          <th scope="row">
+            <select class="form-select" name="option_cate2" aria-label="옵션명 선택">              
+              <option value="">옵션</option>
+              <option value="컬러" >컬러</option>
+              <option value="사이즈" selected>사이즈</option>
+            </select>
+          </th>
+          <td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">옵션명</th>
+                  <th scope="col">가격</th>
+                  <th scope="col">이미지</th>
+                </tr>
+              </thead>
+              <tbody id="option2">
+                <?php               
+                  foreach($options2 as $op){              
+                ?> 
+                <tr id="optionTr2">
+                  <td>
+                    <input type="text" class="form-control" name="optionName2[]" value="<?= $op->option_name;?>">
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" value="<?= $op->option_price ;?>" placeholder="0" aria-label="옵션 가격" aria-describedby="basic-addon2" name="optionPrice2[]">
+                      <span class="input-group-text" id="basic-addon2">원</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">                     
+                      <input type="file" class="form-control" id="optionImage2"  name="optionImage2[]">
+                    </div>
+                  </td>
+                </tr>
+                <?php               
+                  }            
+                ?> 
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm optAddBtn" type="button">옵션추가</button>
+          </td>       
+        </tr>  <!-- //사이즈 옵션 추가 -->        
+        <?php 
+         }
+        ?> 
       </tbody>
     </table>
     <button class="btn btn-primary">상품등록</button>
@@ -221,19 +339,20 @@ const cate3_observer = new MutationObserver(() => {
 
 cate3_observer.observe(cate3, { childList: true });
 
-/*
-setTimeout(()=>{
-  $('#cate2 option').each(function(){
-    console.log($(this));
+let thumbnail = $('#thumbnail');
+thumbnail.on('change',(e)=>{
+    let file = e.target.files[0];
 
-    if($(this).attr('value') == '<?= $cate2_1;?>'){
-      $(this).attr('selected','selected');
+    const reader = new FileReader(); 
+    reader.onloadend = (e)=>{ 
+      let attachment = e.target.result;
+      if(attachment){
+        let target = $('#thumbnail_preview');
+        target.attr('src',attachment)
+      }
     }
+    reader.readAsDataURL(file); 
   });
-},200);
-*/
-
-
 
   $('#addImage').click(function(){
     $('#upfile').trigger('click');

@@ -12,8 +12,8 @@ $('#pcode3').change(function(){
 
 async function makeOption(e,step,category,target){
   let cate = e.val();
-  // console.log(cate);
-  // debugger;
+  console.log(cate);
+  //debugger;
 
   let data = new URLSearchParams({
     cate:cate,

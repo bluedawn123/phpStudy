@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>파일 미리보기</h1>
+  <form action="" enctype="multipart/form-data">
+    <input type="file" id="file" accept="images/*">
+    <div id="preview"></div>
+  </form>
+  <script>
+    let profile = document.querySelector('#file');
+    profile.addEventListener('change',(e)=>{
+      let file = e.target.files[0];
+      //console.log(file[0]);
+      const reader = new FileReader(); //1. 파일 정보를 읽을 수 있는 객체 생성 
+      reader.onloadend = (e)=>{ //3. 파일 정보를 모두 읽으면
+        //console.log(e.target.result);
+        let attachment = e.target.result;
+        if(attachment){
+          let target = document.querySelector('#preview');
+          target.innerHTML = `<img src="${attachment}" width="100" alt="">`;
+        }
+      }
+      reader.readAsDataURL(file); //2. 파일 정보를 읽는다 
+
+    })
+  </script>
+</body>
+</html>

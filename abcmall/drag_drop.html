@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>drag_drop</title>
+  <style>
+    .box{
+      height: 300px;
+      background: #ebebeb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:#ccc; 
+      font-size: 20px;
+      position: relative;
+    }
+    .box span{
+      position: absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+    }
+    .box.drag-enter{
+      background: #3498db;
+      color: #fff;
+    }
+    #thumbnails {
+      display: flex;
+      justify-content: center;
+      gap:20px;
+    }
+    .thumb{
+      width: 100px;
+      position: relative;
+      .close{
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 5px);
+        font-size: 20px;
+        cursor: pointer;
+      }
+      img{
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>  
+  <h1>drag and drop</h1>
+  <div id="drop" class="box">
+    <span>여기로 드래그 앤 드롭하세요</span>
+    <div id="thumbnails"></div>
+  </div>
+  <button id="upload">업로드</button>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    let uploadfiles = [];
+    $('#drop').on('dragenter',function(){
+      $(this).addClass('drag-enter');
+    }).on('dragleave',function(){
+      $(this).removeClass('drag-enter');
+    }).on('dragover',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }).on('drop', function(e){
+      e.preventDefault();      
+      $(this).removeClass('drag-enter');
+      let files = e.originalEvent.dataTransfer.files;
+      //console.log(files);
+      for(let i = 0; i < files.length; i++){
+        let file = files[i];
+        uploadfiles.push(file);
+        preview(file,i);
+      }
+    });
+
+    function preview(file,idx){
+      const reader = new FileReader(); 
+      reader.onloadend = (e)=>{ 
+        let thumbnail = e.target.result;
+        let item = `<div class="thumb">
+          <img src="${thumbnail}" alt="">
+          <div class="close" id="${idx}">X</div>
+        </div>`;
+        $('#thumbnails').append(item);
+      }
+      reader.readAsDataURL(file);
+    }
+
+
+    $('#thumbnails').on('click','.close',function(){
+      let idx = $(this).attr('id');
+      //uploadfiles[idx].upload = 'disabled'; //해당항목을 업로드 제외
+      uploadfiles.splice(idx, 1);  //해당항목을 삭제
+      $(this).parent().remove();
+      
+    });
+
+    $('#upload').click(function(){
+      let formData = new FormData();
+      $.each(uploadfiles, function(i,file){
+        formData.append('savefile',file, file.name);
+      });
+      $.ajax({
+        url:'file/upload/upload.php',
+        data:formData,
+        type:'post',
+        cache: false, //이미지 정보를 브라우저 저장, 안한다
+        contentType:false, //전송되는 데이터 타입지정, 안한다.
+        processData:false, //전송되는 데이터 처리(해석), 안한다.
+        success:function(){
+          //url의 파일에서 결과 오면 할일
+        }
+      })
+
+    });
+  </script>
+</body>
+</html>

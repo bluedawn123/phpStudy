@@ -2,7 +2,7 @@
 $title = "상품등록";
 $summernote_css = "<link href=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css\" rel=\"stylesheet\">";
 $summernote_js = "<script src=\"https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.js\"></script>";
-
+$additional_css = "<link href=\"http://{$_SERVER['HTTP_HOST']}/abcmall/admin/css/drag_drop.css\" rel=\"stylesheet\">";
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/header.php');
 include_once($_SERVER['DOCUMENT_ROOT'].'/abcmall/admin/inc/category_func.php');
 
@@ -62,19 +62,19 @@ $mysqli->close();
         </tr>
         <tr>
           <th scope="row">배송비</th>
-          <td><input type="text" class="form-control w-25" name="delivery_fee" required value="0" ></td>       
+          <td><input type="text" class="form-control w-25" name="delivery_fee" value="0" required></td>       
         </tr>
         <tr>
           <th scope="row">제품가격</th>
-          <td><input type="text" class="form-control w-25" name="price" required value="0"></td>       
+          <td><input type="text" class="form-control w-25" name="price" required  value="0" required></td>       
         </tr>
         <tr>
           <th scope="row">세일가격</th>
-          <td><input type="text" class="form-control w-25" name="sale_price" required value="0"></td>       
+          <td><input type="text" class="form-control w-25" name="sale_price" value="0" required> </td>       
         </tr>
         <tr>
           <th scope="row">세일비율</th>
-          <td><input type="text" class="form-control w-25" name="sale_ratio" required value="0"></td>       
+          <td><input type="text" class="form-control w-25" name="sale_ratio"  value="0" required></td>       
         </tr>
         <tr>
           <th scope="row">전시옵션</th>
@@ -95,9 +95,8 @@ $mysqli->close();
         <tr>
           <th scope="row">위치지정</th>
           <td>          
-            <select class="form-select w-25" name="locate" aria-label="상품 노출 위치 지정">
-              <option selected>위치지정</option>
-              <option value="0">지정안함</option>
+            <select class="form-select w-25" name="locate" aria-label="상품 노출 위치 지정">              
+              <option value="0" selected>지정안함</option>
               <option value="1">1번 위치</option>
               <option value="2">2번 위치</option>
             </select>
@@ -120,7 +119,17 @@ $mysqli->close();
           <td>
             <input type="file" accept="image/*" class="form-control w-50" name="thumbnail" required>
           </td>       
-        </tr>          
+        </tr>      
+        <tr>
+          <th scope="row">추가이미지</th>
+          <td>
+            <div id="drop" class="box">
+              <span>여기로 드래그 앤 드롭하세요</span>
+              <div id="addedImages" class="d-flex gap-3"></div>
+            </div>
+          </td>       
+        </tr>               
+        <!--
         <tr>
           <th scope="row">추가이미지</th>
           <td>
@@ -129,7 +138,85 @@ $mysqli->close();
             <div id="addedImages" class="d-flex gap-3"></div>
           </td>       
         </tr>          
-        
+        -->
+        <tr>
+          <th scope="row">
+            <select class="form-select" name="option_cate1" aria-label="옵션명 선택">              
+              <option value="" selected>옵션</option>
+              <option value="컬러">컬러</option>
+              <option value="사이즈">사이즈</option>
+            </select>
+          </th>
+          <td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">옵션명</th>
+                  <th scope="col">가격</th>
+                  <th scope="col">이미지</th>
+                </tr>
+              </thead>
+              <tbody id="option1">
+                <tr id="optionTr1">
+                  <td>
+                    <input type="text" class="form-control" name="optionName1[]">
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" value="0" placeholder="0" aria-label="옵션 가격" aria-describedby="basic-addon2" name="optionPrice1[]">
+                      <span class="input-group-text" id="basic-addon2">원</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">                     
+                      <input type="file" class="form-control" id="optionImage1"  name="optionImage1[]">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm optAddBtn" type="button">옵션추가</button>
+          </td>       
+        </tr>  <!-- //컬러 옵션 추가 -->
+        <tr>
+          <th scope="row">
+            <select class="form-select" name="option_cate2" aria-label="옵션명 선택">              
+              <option value="" selected>옵션</option>
+              <option value="컬러">컬러</option>
+              <option value="사이즈">사이즈</option>
+            </select>
+          </th>
+          <td>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">옵션명</th>
+                  <th scope="col">가격</th>
+                  <th scope="col">이미지</th>
+                </tr>
+              </thead>
+              <tbody id="option2">
+                <tr id="optionTr2">
+                  <td>
+                    <input type="text" class="form-control" name="optionName2[]">
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control"  value="0" placeholder="0" aria-label="옵션 가격" aria-describedby="basic-addon2" name="optionPrice2[]">
+                      <span class="input-group-text" id="basic-addon2">원</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">                     
+                      <input type="file" class="form-control" id="optionImage2"  name="optionImage2[]">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm optAddBtn" type="button">옵션추가</button>
+          </td>       
+        </tr>  <!-- //사이즈 옵션 추가 -->
       </tbody>
     </table>
     <button class="btn btn-primary">상품등록</button>
@@ -139,6 +226,7 @@ $mysqli->close();
 <script>
 
 
+  /*
   $('#addImage').click(function(){
     $('#upfile').trigger('click');
   });
@@ -152,6 +240,24 @@ $mysqli->close();
     }
 
   });
+  */
+  $('#drop').on('dragenter',function(){
+      $(this).addClass('drag-enter');
+    }).on('dragleave',function(){
+      $(this).removeClass('drag-enter');
+    }).on('dragover',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }).on('drop', function(e){
+      e.preventDefault();      
+      $(this).removeClass('drag-enter');
+      let files = e.originalEvent.dataTransfer.files;
+      //console.log(files);
+      for(let i = 0; i < files.length; i++){
+        let file = files[i];
+        attachFile(file);
+      }
+    });
 
   function attachFile(file){
 
@@ -240,9 +346,6 @@ $mysqli->close();
 
   }
 
-
-
-
   $( "#datepicker" ).datepicker({
     dateFormat: "yy-mm-dd"
   });
@@ -260,6 +363,17 @@ $mysqli->close();
       ['height', ['height']]
     ]
   });
+
+  $('.optAddBtn').click(function(){
+    let optionTbody = $(this).parent().find('tbody');
+    let optionTr = optionTbody.find('tr');
+
+    let addHtml = optionTr.html();
+      addHtml = `<tr>${addHtml}</tr>`;
+    optionTbody.append(addHtml);
+  });
+
+
 
   $('#product_save').submit(function(e){
     var markup = target.summernote('code');
