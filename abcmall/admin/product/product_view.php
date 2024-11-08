@@ -11,7 +11,7 @@ $sql = "SELECT * FROM products WHERE pid = $pid";
 $result = $mysqli->query($sql);
 $data = $result->fetch_object();
 
-$cate = $data->cate ; 
+$cate = $data->cate ; //A0001B0001C0001
 $cate1 = substr($cate, 0, 5); // A0001
 $cate2 = substr($cate, 5, 5); // B0001
 $cate3 = substr($cate, 10, 5); // C0001
@@ -88,8 +88,8 @@ $options2 = getOptions($mysqli, $pid, '사이즈');
                 foreach($addImages as $ai){              
             ?> 
             <li class="w-25">
-              <a href="/abcmall/admin/upload/<?= $ai->filename;?>">
-                <img src="/abcmall/admin/upload/<?= $ai->filename;?>" alt="" class="w-100">
+              <a href="<?= $ai->filename;?>">
+                <img src="<?= $ai->filename;?>" alt="" class="w-100">
               </a>
             </li>
             <?php     

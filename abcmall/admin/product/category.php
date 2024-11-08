@@ -10,6 +10,14 @@ if(!isset($_SESSION['AUID'])){
     </script>
   ";
 }
+if($_SESSION['AULEVEL'] !== 100){
+  echo "
+    <script>
+      alert('권한이 없습니다.');
+      location.href = '../index.php';
+    </script>
+  ";
+}
 
 
 

@@ -16,6 +16,8 @@ if(!isset($title)){
   <title><?= $title; ?> ABCmall</title>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="http://<?=$_SERVER['HTTP_HOST'];?>/abcmall/admin/css/main.css">
+  
   <?php 
     if(isset($summernote_css)){
       echo $summernote_css;
@@ -31,6 +33,9 @@ if(!isset($title)){
   <?php 
     if(isset($summernote_js)){
       echo $summernote_js;
+    }
+    if(isset($chart_js)){
+      echo $chart_js;
     }
   ?>
 </head>

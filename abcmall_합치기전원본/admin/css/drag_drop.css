@@ -1,0 +1,39 @@
+    .box{
+      height: 300px;
+      background: #ebebeb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:#ccc; 
+      font-size: 20px;
+      position: relative;
+    }
+    .box span{
+      position: absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+    }
+    .box.drag-enter{
+      background: #3498db;
+      color: #fff;
+    }
+    #thumbnails {
+      display: flex;
+      justify-content: center;
+      gap:20px;
+    }
+    .thumb{
+      width: 100px;
+      position: relative;
+      .close{
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 5px);
+        font-size: 20px;
+        cursor: pointer;
+      }
+      img{
+        width: 100%;
+      }
+    }
